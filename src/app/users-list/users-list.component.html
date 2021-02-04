@@ -1,0 +1,214 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <button mat-raised-button class="btn btn-danger " data-toggle="modal" data-target="#buy">Add New User</button>
+                <div class="card">
+                    <div class="card-header card-header-danger">
+                        <h4 class="card-title ">Users List</h4>
+                        <p class="card-category"> Here is a subtitle for this table</p>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead class=" text-primary">
+                                    <th>First Name</th>
+                                    <th>Last Name</th>
+                                    <th>Email</th>
+                                    <th>Phone No</th>
+                                    <th>Address</th>
+                                    <th>CNIC</th>
+                                    <th>Gender</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </thead>
+                               <tbody>
+                                <tr *ngFor="let user of users">
+                                    
+                                    <td>{{user.firstName}}</td>
+                                    <td>{{user.lastName}}</td>
+                                    <td>{{user.email}}</td>
+                                    <td>{{user.phoneNo}}</td>
+                                    <td>{{user.address}}</td>
+                                    <td>{{user.cnic}}</td>
+                                    <td>{{user.gender}}</td>
+                                    <td>{{user.isActive}}</td>
+                                    <td><a href="" (click)="AllowedApp(user.id)" data-toggle="modal" data-target="#exampleModal">Allowed Apps</a></td>
+                                </tr>
+                               </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+           
+        </div>
+    </div>
+  </div>
+
+
+  <div class="modal modal-angular fade" id="buy" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body text-center">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+               
+                <div class="separator"></div>
+                <div class="card">
+                    <div class="card-header card-header-danger">
+                        <h4 class="card-title">Add New User</h4>
+                        <p class="card-category">Complete your profile</p>
+                    </div>
+                    <div class="card-body">
+                        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+                            <div class="row">
+                                <div class="col-md-6">
+                                  <mat-form-field class="example-full-width">
+                                    <input matInput placeholder="Fist Name" type="text" formControlName="FirstName" [ngClass]="{ 'is-invalid': submitted && f.FirstName.errors }">
+                                  </mat-form-field>
+                                </div>
+                                <div class="col-md-6">
+                                  <mat-form-field class="example-full-width">
+                                    <input matInput placeholder="Last Name" type="text" formControlName="LastName" [ngClass]="{ 'is-invalid': submitted && f.LastName.errors }">
+                                  </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-7">
+                                    <mat-form-field class="example-full-width">
+                                      <input matInput placeholder="Email address" type="email" formControlName="Email" [ngClass]="{ 'is-invalid': submitted && f.Email.errors }" >
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-5">
+                                    <mat-form-field class="example-full-width">
+                                      <input matInput placeholder="Password" type="password" formControlName="Password" [ngClass]="{ 'is-invalid': submitted && f.Password.errors }" >
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                           
+                            <div class="row">
+                                <div class="col-md-4">
+                                  <mat-form-field class="example-full-width">
+                                    <input matInput placeholder="Phone No" type="text" formControlName="PhoneNo" [ngClass]="{ 'is-invalid': submitted && f.PhoneNo.errors }" >
+                                  </mat-form-field>
+                                </div>
+                                <div class="col-md-4">
+                                  <mat-form-field class="example-full-width">
+                                    <input matInput placeholder="CNIC" type="text" formControlName="Cnic" [ngClass]="{ 'is-invalid': submitted && f.Cnic.errors }" >
+                                  </mat-form-field>
+                                </div>
+                                <div class="col-md-4">
+                                    <mat-form-field class="example-full-width">
+                                        <mat-label>Select an Gender</mat-label>
+                                        <mat-select [(value)]="selected" formControlName="Gender" [ngClass]="{ 'is-invalid': submitted && f.Gender.errors }" >
+                                          <mat-option value="Male">Male</mat-option>
+                                          <mat-option value="Female">FeMale</mat-option>
+                                          <mat-option value="Others">Other</mat-option>
+                                          
+                                        </mat-select>
+                                      </mat-form-field>
+                                  
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                  <label>Address</label>
+                                  <mat-form-field class="example-full-width">
+                                     <textarea matInput placeholder="21-L Model Town Lahore." formControlName="Address" [ngClass]="{ 'is-invalid': submitted && f.Address.errors }" ></textarea>
+                                   </mat-form-field>
+                                    <!-- <div class="form-group">
+  
+                                        <div class="form-group">
+                                            <label class="bmd-label-floating"> Lamborghini Mercy, Your chick she so thirsty, I'm in that two seat Lambo.</label>
+                                            <textarea class="form-control" rows="5"></textarea>
+                                        </div>
+                                    </div> -->
+                                </div>
+                            </div>
+                            <button mat-raised-button type="submit" class="btn btn-danger pull-right">Update Profile</button>
+                            <div class="clearfix"></div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    </div>
+    <div class="modal modal-angular fade" id="userServices" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body text-center">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                   
+                    <div class="separator"></div>
+                    <div class="card">
+                        <div class="card-header card-header-danger">
+                            <h4 class="card-title">User Services</h4>
+                           
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                
+                                <table class="table">
+                                    <thead class=" text-primary">
+                                        
+                                        <th>App Name</th>
+                                        <th>Action</th>
+                                        
+                                    </thead>
+                                   <tbody>
+                                    <tr *ngFor="let services of service" [attr.id]="services.id">
+                                        
+                                        <td>{{services.app_Name}}</td>
+                                       <td>
+                                        <button mat-raised-button class="btn" (click)="removeAuthorize(services.id)">Remove</button>
+                                        
+                                        </td>
+                                    </tr>
+                                   </tbody>
+                                </table>
+                            
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="separator"></div>
+                    <div class="card">
+                        <div class="card-header card-header-danger">
+                            <h4 class="card-title">Assign Service</h4>
+                           
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                
+                                <table class="table">
+                                    <thead class=" text-primary">
+                                        
+                                        <th>App Name</th>
+                                        <th>Action</th>
+                                        
+                                    </thead>
+                                   <tbody>
+                                    <tr *ngFor="let services of notAssignService">
+                                        
+                                        <td>{{services.appName}}</td>
+                                       <td>
+                                        <input type="checkbox" change="onChange($event, services.id)">
+                                        
+                                        </td>
+                                    </tr>
+                                   </tbody>
+                                </table>
+                            
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        </div>
+      
+  

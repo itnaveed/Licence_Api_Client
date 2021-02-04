@@ -1,0 +1,121 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <button mat-raised-button class="btn btn-danger " data-toggle="modal" data-target="#buy">Add New Service</button>
+                <div class="card">
+                    <div class="card-header card-header-danger">
+                        <h4 class="card-title ">Services List</h4>
+                        <p class="card-category"> Here is a subtitle for this table</p>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead class=" text-primary">
+                                    <th>
+                                        App Name
+                                    </th>
+                                    <th>
+                                        Detail
+                                    </th>
+                                    <th>
+                                       Version
+                                    </th>
+                                    <th>
+                                        App Code
+                                    </th>
+                                    <th>
+                                        Services URL
+                                    </th>
+                                    <th>
+                                        Actions
+                                    </th>
+                                   
+                                </thead>
+                               <tbody>
+                                <tr *ngFor="let service of services">
+                                    
+                                    <td>{{service.appName}}</td>
+                                    <td>{{service.detail}}</td>
+                                    <td>{{service.version}}</td>
+                                    <td>{{service.app_Code}}</td>
+                                    <td>{{service.service_URL}}</td>
+                                    <td><a href="#">Update</a></td>
+                                </tr>
+                               </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+           
+        </div>
+    </div>
+  </div>
+
+  <div class="modal modal-angular fade" id="buy" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body text-center">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+               
+                <div class="separator"></div>
+                <div class="card">
+                    <div class="card-header card-header-danger">
+                        <h4 class="card-title">Add New Services</h4>
+                        
+                    </div>
+                    <div class="card-body">
+                        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+                            <div class="row">
+                                <div class="col-md-7">
+                                  <mat-form-field class="example-full-width">
+                                      <input matInput placeholder="App Name" formControlName="AppName" [ngClass]="{ 'is-invalid': submitted && f.AppName.errors }">
+                                      <!-- <div *ngIf="submitted && f.appName.errors" class="invalid-feedback">
+                                        <div *ngIf="f.appName.errors.required">App Name is required</div>
+                                    </div> -->
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-5">
+                                    <mat-form-field class="example-full-width">
+                                      <input matInput placeholder="Version" formControlName="Version" [ngClass]="{ 'is-invalid': submitted && f.Version.errors }">
+                                     
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                  <mat-form-field class="example-full-width">
+                                    <input matInput placeholder="App Code" type="text" formControlName="App_Code" [ngClass]="{ 'is-invalid': submitted && f.App_Code.errors }">
+                                    
+                                  </mat-form-field>
+                                </div>
+                                <div class="col-md-6">
+                                  <mat-form-field class="example-full-width">
+                                    <input matInput placeholder="URL" type="text" formControlName="Service_URL" [ngClass]="{ 'is-invalid': submitted && f.Service_URL.errors }">
+                                   
+                                  </mat-form-field>
+                                </div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-md-12">
+                                  <label>Detail</label>
+                                  <mat-form-field class="example-full-width">
+                                     <textarea matInput placeholder="Face recognition app is usefull to recognize face." formControlName="Detail"></textarea>
+                                   </mat-form-field>
+                                   
+                                </div>
+                            </div>
+                            <button mat-raised-button  class="btn btn-danger pull-right">Save</button>
+                            <div class="clearfix"></div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    </div>
+  
+
