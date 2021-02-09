@@ -32,6 +32,7 @@ export class OurServicesComponent implements OnInit {
               App_Code: ['', Validators.required],
               Service_URL: ['', Validators.required],
               Detail: [''],
+              id: [''],
           });
   }
   get f() { return this.form.controls; }
@@ -43,13 +44,19 @@ debugger;
     if (this.form.invalid) {
         return;
     }
-
-    this.ourServices.addService(this.form.value)
+let id = this.form.value.id;
+if(id>0){
+  this.ourServices.updateService(this.form.value)
             .pipe(first())
             .subscribe({
                 next: () => {
                     debugger;
-                    this.notificationsService.showNotification('top','right','Service Added Succesfully..',2)
+                    this.notificationsService.showNotification('top','right','Service Updated Succesfully..',2);
+                    this.ourServices.getAll()
+            .pipe()
+            .subscribe(service => this.services = service);
+                    ($('#buy') as any).modal('hide');
+                    this.form.reset();
                     //this.alertService.success('Registration successful', { keepAfterRouteChange: true });
                     //this.router.navigate(['../login'], { relativeTo: this.route });
                 },
@@ -59,7 +66,46 @@ debugger;
                     this.notificationsService.showNotification('top','left',error,4)   
                 }
             });
+}else{
 
+delete this.form.value.id;
+
+  this.ourServices.addService(this.form.value)
+  .pipe(first())
+  .subscribe({
+      next: () => {
+          debugger;
+          this.notificationsService.showNotification('top','right','Service Added Succesfully..',2);
+          this.ourServices.getAll()
+            .pipe()
+            .subscribe(service => this.services = service);
+                    ($('#buy') as any).modal('hide');
+                    this.form.reset();
+                    //this.alertService.success('Registrati
+          //this.alertService.success('Registration successful', { keepAfterRouteChange: true });
+          //this.router.navigate(['../login'], { relativeTo: this.route });
+      },
+      error: error => {
+        debugger
+          //this.alertService.error("Email Already Exist...");
+          this.notificationsService.showNotification('top','left',error,4)   
+      }
+  });
+}
+  }
+  update(id){
+debugger
+const _service = this.services.find(x => x.id === id);
+
+this.form.patchValue({
+  id:_service.id,
+  AppName: _service.appName,
+  Version: _service.version,
+  App_Code: _service.app_Code,
+  Service_URL: _service.service_URL,
+  Detail: _service.detail
+});
+($('#buy') as any).modal('show');
   }
 
 }

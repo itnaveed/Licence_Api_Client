@@ -24,7 +24,6 @@
                                 </thead>
                                <tbody>
                                 <tr *ngFor="let user of users">
-                                    
                                     <td>{{user.firstName}}</td>
                                     <td>{{user.lastName}}</td>
                                     <td>{{user.email}}</td>
@@ -94,7 +93,7 @@
                                 </div>
                                 <div class="col-md-4">
                                   <mat-form-field class="example-full-width">
-                                    <input matInput placeholder="CNIC" type="text" formControlName="Cnic" [ngClass]="{ 'is-invalid': submitted && f.Cnic.errors }" >
+                                    <input matInput placeholder="CNIC" type="text"  formControlName="Cnic" [ngClass]="{ 'is-invalid': submitted && f.Cnic.errors }" >
                                   </mat-form-field>
                                 </div>
                                 <div class="col-md-4">
@@ -102,7 +101,7 @@
                                         <mat-label>Select an Gender</mat-label>
                                         <mat-select [(value)]="selected" formControlName="Gender" [ngClass]="{ 'is-invalid': submitted && f.Gender.errors }" >
                                           <mat-option value="Male">Male</mat-option>
-                                          <mat-option value="Female">FeMale</mat-option>
+                                          <mat-option value="Female">Female</mat-option>
                                           <mat-option value="Others">Other</mat-option>
                                           
                                         </mat-select>
@@ -195,8 +194,21 @@
                                         
                                         <td>{{services.appName}}</td>
                                        <td>
-                                        <input type="checkbox" change="onChange($event, services.id)">
                                         
+                                        <div class="form-check">
+                                            <label class="form-check-label">
+                                                <input type="checkbox" class="form-check-input" (change)="onChange($event.target.checked, services.id)">
+                                                <span class="form-check-sign">
+                                                    <span class="check"></span>
+                                                </span>
+                                            </label>
+                                        </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>
+                                            <button mat-raised-button class="btn btn-success" (click)="assignApp()">Add</button>
                                         </td>
                                     </tr>
                                    </tbody>
@@ -210,5 +222,3 @@
         </div>
         
         </div>
-      
-  

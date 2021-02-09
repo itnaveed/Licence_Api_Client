@@ -16,9 +16,13 @@ export class ServicesService {
     debugger;
     return this.http.get<Services[]>(`${environment.apiUrl}/api/services/ServicesList`);
 }
-addService(service: Services) {
+addService(service: any) {
   debugger;
   return this.http.post(`${environment.apiUrl}/api/services/AddService`, service);
+}
+updateService(service: Services) {
+  debugger;
+  return this.http.put(`${environment.apiUrl}/api/services/updateService`, service);
 }
 
 userServices(ID:any){
@@ -31,6 +35,10 @@ removeAuthorize(ID:any){
   debugger
   return this.http.delete(`${environment.apiUrl}/api/authorize/removeAuthorize/${ID}`);
            
+}
+assignServices(service: any) {
+  debugger;
+  return this.http.post(`${environment.apiUrl}/api/authorize/allowservice`, service);
 }
 
 }

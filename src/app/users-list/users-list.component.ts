@@ -23,7 +23,8 @@ export class UsersListComponent implements OnInit {
   selectedItemsList=[];
   checkedIDs=[];
   notAssignService:any;
- 
+  user_id: any;
+   obj = {};
   constructor(
     private userService: UsersService,
     private servicesService: ServicesService,
@@ -38,14 +39,13 @@ export class UsersListComponent implements OnInit {
     this.userService.getAll()
             .pipe()
             .subscribe(users => this.users = users);
-
             this.form = this.formBuilder.group({
               FirstName: ['', Validators.required],
               LastName: ['', Validators.required],
               Email: ['',[Validators.required,Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]],
               Password: ['', Validators.required],
               Address: ['', Validators.required],
-              PhoneNo: ['', Validators.required],
+              PhoneNo: ['', [Validators.required,Validators.pattern("^((\\+92-?)|0)?[0-9]{10}$")]],
               Cnic: ['', Validators.required],
               Gender: ['', Validators.required],
               IsActive: [''],
@@ -72,9 +72,7 @@ debugger
                     ($('#buy') as any).modal('hide');
                     this.ngOnInit()
                     this.notificationsService.showNotification('top','right','User Added Succesfully..',2)
-                    //this.alertService.success('Registration successful', { keepAfterRouteChange: true });
-                    //this.router.navigate(['../login'], { relativeTo: this.route });
-
+                   
                 },
                 error: error => {
                     //this.alertService.error("Email Already Exist...");
@@ -84,15 +82,22 @@ debugger
                 }
             });
   }
-  AllowedApp(id){
+  AssignServices(id){
     this.servicesService.userServices(id)
-            .pipe()
-            .subscribe(services => this.service = services);
-
-            this.servicesService.notAssign(id)
-            .pipe()
-            .subscribe(service => this.notAssignService = service);
-
+    .pipe()
+    .subscribe(services => this.service = services);
+  }
+  NotAssignServices(id){
+    this.servicesService.notAssign(id)
+    .pipe()
+    .subscribe(service => this.notAssignService = service);
+  }
+  AllowedApp(id){
+  debugger;
+  this.checkedIDs=[];
+    this.AssignServices(id);
+    this.NotAssignServices(id);
+            this.user_id = id;
             ($('#userServices') as any).modal('show');
   }
 
@@ -103,6 +108,7 @@ this.servicesService.removeAuthorize(id)
                 next: () => {
                     debugger;
                     this.deleteRow(id);
+                    this.NotAssignServices(this.user_id);
                     this.notificationsService.showNotification('top','right','App aremove',2)
                 },
                 error: error => {
@@ -125,11 +131,41 @@ onChange(checked ,item){
   debugger
   if(checked){
     this.checkedIDs.push({
-                  service_id: item,
+      ServiceId: item,
+      UserId:this.user_id
                   //UserId: this.use_id
                 })
     } else {
       this.checkedIDs.splice(this.selected.indexOf(item), 1)
     }
 }
+
+assignApp(){
+ 
+    debugger
+    if(this.checkedIDs.length>0){
+      this.servicesService.assignServices(this.checkedIDs)
+      .pipe(first())
+      .subscribe({
+          next: () => {
+              debugger;
+              //($('#userServices') as any).modal('hide');
+              this.checkedIDs=[];
+              this.AllowedApp(this.user_id);
+              this.notificationsService.showNotification('top','right','Services assign successfuly',2)
+              //this.alertService.success('Registration successful', { keepAfterRouteChange: true });
+              //this.router.navigate(['../login'], { relativeTo: this.route });
+
+          },
+          error: error => {
+              //this.alertService.error("Email Already Exist...");
+              ($('#buy') as any).modal('hide');
+              this.notificationsService.showNotification('top','left',error.error.message,4)
+              
+          }
+      });
+    }
+  
+}
+
 }

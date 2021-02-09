@@ -1,9 +1,10 @@
 export class Services {
-    appname: string;
+    id:string;
+    appName: string;
     detail: string;
     version: string;
-    appcode: string;
-    serviceurl: string;
+    app_Code: string;
+    service_URL: string;
    
 }
 

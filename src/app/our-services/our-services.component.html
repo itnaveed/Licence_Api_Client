@@ -40,7 +40,7 @@
                                     <td>{{service.version}}</td>
                                     <td>{{service.app_Code}}</td>
                                     <td>{{service.service_URL}}</td>
-                                    <td><a href="#">Update</a></td>
+                                    <td><a  (click)="update(service.id)" >Update</a></td>
                                 </tr>
                                </tbody>
                             </table>
@@ -67,6 +67,7 @@
                     </div>
                     <div class="card-body">
                         <form [formGroup]="form" (ngSubmit)="onSubmit()">
+                            <input type="hidden" formControlName="id">
                             <div class="row">
                                 <div class="col-md-7">
                                   <mat-form-field class="example-full-width">
