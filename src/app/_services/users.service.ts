@@ -30,5 +30,19 @@ assignService(user: userService) {
   debugger;
   return this.http.post(`${environment.apiUrl}/api/Users/RegisterUser`, user);
 }
+getDetail(id:any):Observable<any> {
+  debugger;
+  return this.http.get<User>(`${environment.apiUrl}/api/users/GetDetail/${id}`);
+}
+updateUser(user: User) {
+  if(user.IsActive == true){
+    user.IsActive = true;
+  }
+  else{
+    user.IsActive = false;
+  }
+  debugger;
+  return this.http.put(`${environment.apiUrl}/api/Users/updateUser`, user);
+}
 
 }

@@ -2,7 +2,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12">
-                <button mat-raised-button class="btn btn-danger " data-toggle="modal" data-target="#buy">Add New User</button>
+                <button mat-raised-button class="btn btn-danger " (click)="changeStatus()" data-toggle="modal" data-target="#buy">Add New User</button>
                 <div class="card">
                     <div class="card-header card-header-danger">
                         <h4 class="card-title ">Users List</h4>
@@ -32,7 +32,10 @@
                                     <td>{{user.cnic}}</td>
                                     <td>{{user.gender}}</td>
                                     <td>{{user.isActive}}</td>
-                                    <td><a href="" (click)="AllowedApp(user.id)" data-toggle="modal" data-target="#exampleModal">Allowed Apps</a></td>
+                                    <td>
+                                        <a href="" (click)="AllowedApp(user.id)" data-toggle="modal" data-target="#exampleModal">Allowed Apps</a><br>
+                                        <a href="" (click)="updateUser(user.id)" data-toggle="modal" >Update</a>
+                                    </td>
                                 </tr>
                                </tbody>
                             </table>
@@ -44,8 +47,7 @@
         </div>
     </div>
   </div>
-
-
+  
   <div class="modal modal-angular fade" id="buy" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -55,11 +57,13 @@
                 <div class="separator"></div>
                 <div class="card">
                     <div class="card-header card-header-danger">
-                        <h4 class="card-title">Add New User</h4>
+                        <h4 class="card-title" *ngIf="!(isUpdate)">Add New User</h4>
+                        <h4 class="card-title" *ngIf="(isUpdate)">Update User</h4>
                         <p class="card-category">Complete your profile</p>
                     </div>
                     <div class="card-body">
                         <form [formGroup]="form" (ngSubmit)="onSubmit()">
+                            <input type="hidden" formControlName="Id">
                             <div class="row">
                                 <div class="col-md-6">
                                   <mat-form-field class="example-full-width">
@@ -79,9 +83,13 @@
                                     </mat-form-field>
                                 </div>
                                 <div class="col-md-5">
+                                    <span>
                                     <mat-form-field class="example-full-width">
-                                      <input matInput placeholder="Password" type="password" formControlName="Password" [ngClass]="{ 'is-invalid': submitted && f.Password.errors }" >
+                                      <input matInput placeholder="Password" [type]="hide ? 'password' : 'text'" formControlName="Password" [ngClass]="{ 'is-invalid': submitted && f.Password.errors }" >
+                                      <mat-icon class="placeholder" (click)="showPassword()">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
                                     </mat-form-field>
+                                   
+                                </span>
                                 </div>
                             </div>
                            
@@ -109,7 +117,7 @@
                                   
                                 </div>
                             </div>
-                            <div class="row">
+                            <div class="row" *ngIf="!(isUpdate)">
                                 <div class="col-md-12">
                                   <label>Address</label>
                                   <mat-form-field class="example-full-width">
@@ -124,7 +132,34 @@
                                     </div> -->
                                 </div>
                             </div>
-                            <button mat-raised-button type="submit" class="btn btn-danger pull-right">Update Profile</button>
+                            <div class="row" *ngIf="isUpdate">
+                                <div class="col-md-8">
+                                  
+                                  <mat-form-field class="example-full-width">
+                                     <textarea matInput placeholder="Address" formControlName="Address" [ngClass]="{ 'is-invalid': submitted && f.Address.errors }" ></textarea>
+                                   </mat-form-field>
+                                    <!-- <div class="form-group">
+  
+                                        <div class="form-group">
+                                            <label class="bmd-label-floating"> Lamborghini Mercy, Your chick she so thirsty, I'm in that two seat Lambo.</label>
+                                            <textarea class="form-control" rows="5"></textarea>
+                                        </div>
+                                    </div> -->
+                                </div>
+                                <div class="col-md-4">
+                                    <mat-form-field class="example-full-width">
+                                        <mat-label>User Status</mat-label>
+                                        <mat-select  formControlName="IsActive" [ngClass]="{ 'is-invalid': submitted && f.IsActive.errors }" >
+                                          <mat-option value="true">Active</mat-option>
+                                          <mat-option value="false">Deactive</mat-option>
+                                          
+                                        </mat-select>
+                                      </mat-form-field>
+                                  
+                                </div>
+                            </div>
+                            <button mat-raised-button type="submit" class="btn btn-danger pull-right" *ngIf="(isUpdate)">Update Profile</button>
+                            <button mat-raised-button type="submit" class="btn btn-danger pull-right" *ngIf="!(isUpdate)">Add User</button>
                             <div class="clearfix"></div>
                         </form>
                     </div>

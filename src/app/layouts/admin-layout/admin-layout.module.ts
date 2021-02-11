@@ -19,6 +19,7 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatSelectModule} from '@angular/material/select';
 import { UsersListComponent } from 'app/users-list/users-list.component';
 import { OurServicesComponent } from 'app/our-services/our-services.component';
+import { AngularMaterialModule } from 'app/angular-material/angular-material.module';
 
 @NgModule({
   imports: [
@@ -32,6 +33,7 @@ import { OurServicesComponent } from 'app/our-services/our-services.component';
     MatInputModule,
     MatSelectModule,
     MatTooltipModule,
+    AngularMaterialModule
   ],
   declarations: [
     DashboardComponent,

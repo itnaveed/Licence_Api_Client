@@ -22,6 +22,8 @@ import {
   AgmCoreModule
 } from '@agm/core';
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
+import { LoginComponent } from './login/login.component';
+import { AngularMaterialModule } from './angular-material/angular-material.module';
 
 @NgModule({
   imports: [
@@ -36,6 +38,7 @@ import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.compon
     MatButtonModule,
     CommonModule,
     MatIconModule,
+    AngularMaterialModule,
     AgmCoreModule.forRoot({
       apiKey: 'YOUR_GOOGLE_MAPS_API_KEY'
     })
@@ -43,6 +46,7 @@ import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.compon
   declarations: [
     AppComponent,
     AdminLayoutComponent,
+    LoginComponent,
     
   ],
   providers: [],

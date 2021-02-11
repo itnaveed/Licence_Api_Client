@@ -14,7 +14,7 @@ export class OurServicesComponent implements OnInit {
   form: FormGroup;
   services: Services[];
   submitted: boolean;
-
+title:string;
   constructor(
     private formBuilder: FormBuilder,
     private ourServices: ServicesService,
@@ -95,6 +95,7 @@ delete this.form.value.id;
   }
   update(id){
 debugger
+this.title = "Update Service";
 const _service = this.services.find(x => x.id === id);
 
 this.form.patchValue({
@@ -106,6 +107,11 @@ this.form.patchValue({
   Detail: _service.detail
 });
 ($('#buy') as any).modal('show');
+  }
+  newServiceModal(){
+    this.form.reset();
+    this.title ="";
+    ($('#buy') as any).modal('show');
   }
 
 }

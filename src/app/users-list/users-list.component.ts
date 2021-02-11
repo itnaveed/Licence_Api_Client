@@ -5,6 +5,8 @@ import { Router,ActivatedRoute } from '@angular/router';
 import { NotificationsService } from 'app/_services/notifications.service';
 import { ServicesService } from 'app/_services/services.service';
 import { UsersService } from 'app/_services/users.service';
+import { analytics } from 'googleapis/build/src/apis/analytics';
+import { Observable } from 'rxjs';
 import { first } from 'rxjs/operators';
 
 
@@ -14,7 +16,8 @@ import { first } from 'rxjs/operators';
   styleUrls: ['./users-list.component.css']
 })
 export class UsersListComponent implements OnInit {
-  users: unknown;
+  users: any;
+  isUpdate:boolean= false;
   form: FormGroup;
   submitted: boolean;
   service: any;
@@ -24,7 +27,9 @@ export class UsersListComponent implements OnInit {
   checkedIDs=[];
   notAssignService:any;
   user_id: any;
+  UserInfo:any;
    obj = {};
+   hide : boolean = true;
   constructor(
     private userService: UsersService,
     private servicesService: ServicesService,
@@ -49,6 +54,7 @@ export class UsersListComponent implements OnInit {
               Cnic: ['', Validators.required],
               Gender: ['', Validators.required],
               IsActive: [''],
+              Id: [''],
               
           });
             
@@ -63,8 +69,9 @@ debugger;
         return;
     }
 debugger
-
-    this.userService.addUser(this.form.value)
+let id = this.form.value.Id;
+if(id){
+  this.userService.updateUser(this.form.value)
             .pipe(first())
             .subscribe({
                 next: () => {
@@ -81,6 +88,27 @@ debugger
                     
                 }
             });
+}else{
+  delete this.form.value.Id
+  this.userService.addUser(this.form.value)
+            .pipe(first())
+            .subscribe({
+                next: () => {
+                    debugger;
+                    ($('#buy') as any).modal('hide');
+                    this.ngOnInit()
+                    this.notificationsService.showNotification('top','right','User Added Succesfully..',2)
+                   
+                },
+                error: error => {
+                    //this.alertService.error("Email Already Exist...");
+                    ($('#buy') as any).modal('hide');
+                    this.notificationsService.showNotification('top','left',error.error.message,4)
+                    
+                }
+            });
+}
+  
   }
   AssignServices(id){
     this.servicesService.userServices(id)
@@ -166,6 +194,40 @@ assignApp(){
       });
     }
   
+}
+showPassword() {
+  this.hide = !this.hide;
+}
+updateUser(id){
+  this.isUpdate= true;
+  debugger
+  this.userService.getDetail(id)
+            .pipe()
+            .subscribe(users =>{
+              this.UserInfo = users;
+              this.form.patchValue({
+                FirstName: this.UserInfo.firstName,
+                LastName: this.UserInfo.lastName,
+                Email:this.UserInfo.email,
+                Password: this.UserInfo.password,
+                Address: this.UserInfo.address,
+                PhoneNo: this.UserInfo.phoneNo,
+                Cnic: this.UserInfo.cnic,
+                Gender: this.UserInfo.gender,
+                Id: this.UserInfo.id,
+                IsActive:this.UserInfo.isActive.toString() 
+              
+              });
+              ($('#buy') as any).modal('show');
+
+            } );
+ console.log(this.UserInfo)
+debugger
+
+}
+changeStatus(){
+  this.isUpdate= false;
+  this.form.reset()
 }
 
 }

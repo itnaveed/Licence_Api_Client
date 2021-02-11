@@ -2,7 +2,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12">
-                <button mat-raised-button class="btn btn-danger " data-toggle="modal" data-target="#buy">Add New Service</button>
+                <button mat-raised-button class="btn btn-danger " (click)="newServiceModal()">Add New Service</button>
                 <div class="card">
                     <div class="card-header card-header-danger">
                         <h4 class="card-title ">Services List</h4>
@@ -62,7 +62,9 @@
                 <div class="separator"></div>
                 <div class="card">
                     <div class="card-header card-header-danger">
-                        <h4 class="card-title">Add New Services</h4>
+                        <h4 *ngIf="!(title)" class="card-title">Add New Services</h4>
+                        <h4 *ngIf="title" class="card-title">{{title}}</h4>
+                        
                         
                     </div>
                     <div class="card-body">
@@ -119,4 +121,3 @@
     
     </div>
   
-
